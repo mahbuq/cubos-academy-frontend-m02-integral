@@ -1,0 +1,262 @@
+/* GERAL */
+* {
+   margin: 0;
+   padding: 0;
+   font-family: "Manrope", sans-serif;
+}
+
+img {
+   cursor: pointer;
+}
+
+/* HEADER */
+
+header {
+   display: flex;
+   justify-content: space-between;
+
+   padding: 13px 15px;
+   margin-bottom: 41px;
+
+   background-color: #a785ed;
+
+   color: white;
+   font-size: 25px;
+   font-weight: 700;
+}
+
+/* MAIN */
+
+.container {
+   text-align: center;
+}
+
+.input {
+   padding: 14px;
+   width: 400px;
+   margin-bottom: 41px;
+
+   border: 1px solid rgba(151, 151, 151, 1);
+   border-radius: 8px;
+
+   font-size: 12px;
+   color: rgba(151, 151, 151, 1);
+}
+
+/* MOVIES */
+.movies-container,
+.movies {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   gap: 24px;
+   margin-bottom: 40px;
+}
+
+.movie__poster {
+   width: 168px;
+   height: 301px;
+}
+
+.movie {
+   position: relative;
+}
+
+.movie__info {
+   background-color: black;
+   opacity: 0.8;
+
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   padding: 8px;
+
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
+}
+
+.movie__title {
+   color: white;
+   font-weight: 700;
+   font-size: 16px;
+}
+
+.movie__rating {
+   color: rgba(251, 205, 110, 1);
+   font-weight: 700;
+   font-size: 12px;
+}
+
+.hidden {
+   display: none !important;
+}
+
+/* MOVIE DO DIA */
+
+.subtitle {
+   margin-bottom: 16px;
+   font-size: 24px;
+}
+
+.highlight {
+   display: flex;
+   justify-content: center;
+   gap: 24px;
+
+   text-align: justify;
+
+   margin-bottom: 150px;
+}
+
+.highlight__info {
+   padding-top: 16px;
+
+   width: 360px;
+
+   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.highlight__title-rating {
+   display: flex;
+   justify-content: space-between;
+   align-items: baseline;
+
+   font-size: 24px;
+   font-weight: 700;
+}
+
+.highlight__title {
+   color: rgba(225, 131, 200, 1);
+
+   margin-left: 16px;
+   margin-bottom: 8px;
+}
+
+.highlight__rating {
+   color: rgba(167, 133, 237, 1);
+
+   margin-right: 16px;
+}
+
+.highlight__genre-launch {
+   color: rgba(0, 0, 0, 0.7);
+
+   font-size: 12px;
+
+   margin: 0 16px 36px 16px;
+}
+
+.highlight__description {
+   font-size: 16px;
+   line-height: 24px;
+
+   margin: 0 16px;
+}
+
+.video__poster {
+   background-color: black;
+}
+
+.video__poster img {
+   width: 550px;
+   height: 350px;
+
+   opacity: 0.5;
+}
+
+.highlight__video {
+   position: relative;
+}
+
+.play {
+   z-index: 1;
+
+   position: absolute;
+   top: 150px;
+   left: 250px;
+}
+
+/* MODAL */
+
+.modal {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   left: 0;
+
+   z-index: 2;
+
+   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal__img {
+   width: 740px;
+   margin-bottom: 30px;
+}
+
+.modal__title {
+   text-align: center;
+   color: white;
+   font-size: 36px;
+
+   margin-bottom: 40px;
+}
+
+.modal__description {
+   color: white;
+   font-size: 20px;
+   line-height: 30px;
+
+   width: 740px;
+   margin-bottom: 20px;
+}
+
+.modal__close {
+   position: absolute;
+   top: 60px;
+   right: 60px;
+}
+
+.modal__genre-average {
+   width: 740px;
+
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.modal__average {
+   background-color: rgba(167, 133, 237, 1);
+   border-radius: 8px;
+
+   padding: 9px 11px;
+
+   color: white;
+   font-weight: 700;
+   font-size: 20px;
+}
+
+.modal__genres {
+   display: flex;
+   gap: 12px;
+   justify-items: flex-start;
+}
+
+.genre {
+   padding: 9px 11px;
+
+   background-color: rgba(225, 131, 200, 1);
+   border-radius: 8px;
+
+   color: white;
+}

@@ -110,7 +110,14 @@ fetch(
    promiseBody.then((bodyResposta) => {
       highlightTitle.textContent = bodyResposta.title;
       highlightRating.textContent = bodyResposta.vote_average;
-      highligthLaunch.textContent = formatDate(bodyResposta.release_date);
+      const options = {
+         year: "numeric",
+         month: "long",
+         day: "numeric",
+      };
+      highligthLaunch.textContent = new Date(bodyResposta.release_date)
+         .toLocaleDateString("pt-BR", options)
+         .toUpperCase();
       highlightDescription.textContent = bodyResposta.overview;
 
       let genreName = [];
@@ -130,26 +137,6 @@ fetch(
       highlightVideo.append(posterDiv);
    });
 });
-
-function formatDate(date) {
-   const month = [
-      "JANEIRO",
-      "FEVEREIRO",
-      "ABRIL",
-      "MARÇO",
-      "MAIO",
-      "JUNHO",
-      "JULHO",
-      "AGOSTO",
-      "SETEMBRO",
-      "OUTUBRO",
-      "NOVEMBRO",
-      "DEZEMBRO",
-   ];
-   return `${date.slice(8, 10)} DE ${
-      month[Number(date.slice(5, 7)) - 1]
-   } DE ${date.slice(0, 4)}`;
-}
 
 fetch(
    "https://tmdb-proxy.cubos-academy.workers.dev/3/movie/436969/videos?language=pt-BR"
@@ -245,15 +232,15 @@ searchInput.addEventListener("keydown", function (event) {
    }
 });
 
-let theme = "ligth";
+let currentTheme = "light";
 
 themeBtn.addEventListener("click", function () {
-   if (theme == "ligth") {
+   if (currentTheme == "light") {
       darkTheme();
    } else {
       lightTheme();
    }
-   console.log(theme);
+   localStorage.setItem("theme", currentTheme);
 });
 
 function darkTheme() {
@@ -274,7 +261,7 @@ function darkTheme() {
 
    themeBtn.src = "./assets/dark-mode.svg";
 
-   theme = "dark";
+   currentTheme = "dark";
 }
 
 function lightTheme() {
@@ -294,5 +281,5 @@ function lightTheme() {
 
    themeBtn.src = "./assets/light-mode.svg";
 
-   theme = "ligth";
+   currentTheme = "light";
 }

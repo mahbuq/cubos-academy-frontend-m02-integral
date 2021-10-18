@@ -33,6 +33,8 @@ const themeBtn = document.querySelector(".btn-theme");
 const body = document.querySelector("body");
 const subtitle = document.querySelector(".subtitle");
 
+const currentTheme = localStorage.getItem("light");
+
 function addMovie(position, movieIndex, movies) {
    if (!movies[movieIndex].poster_path) {
       moviePoster[position].src = "./assets/grey.jpg";
@@ -40,14 +42,8 @@ function addMovie(position, movieIndex, movies) {
       moviePoster[position].src = movies[movieIndex].poster_path;
    }
 
-   movieTitle[position].textContent =
-      movies[movieIndex].title.slice(0, 10) + "...";
-   movieRating[position].textContent = movies[movieIndex].vote_average;
-
-   const star = document.createElement("img");
-   star.src = "./assets/estrela.svg";
-   movieRating[position].insertAdjacentElement("afterbegin", star);
-   star.style.margin = "2px 2px 0 0";
+   movieTitle[position].textContent = movies[movieIndex].title.slice(0, 10) + "...";
+   movieRating[position].append(movies[movieIndex].vote_average);
 
    moviePoster[position].setAttribute("id", movies[movieIndex].id);
 }
@@ -102,41 +98,41 @@ modal.addEventListener("click", function () {
    modal.classList.add("hidden");
 });
 
-fetch(
-   "https://tmdb-proxy.cubos-academy.workers.dev/3/movie/436969?language=pt-BR"
-).then((resposta) => {
-   const promiseBody = resposta.json();
+fetch("https://tmdb-proxy.cubos-academy.workers.dev/3/movie/436969?language=pt-BR").then(
+   (resposta) => {
+      const promiseBody = resposta.json();
 
-   promiseBody.then((bodyResposta) => {
-      highlightTitle.textContent = bodyResposta.title;
-      highlightRating.textContent = bodyResposta.vote_average;
-      const options = {
-         year: "numeric",
-         month: "long",
-         day: "numeric",
-      };
-      highligthLaunch.textContent = new Date(bodyResposta.release_date)
-         .toLocaleDateString("pt-BR", options)
-         .toUpperCase();
-      highlightDescription.textContent = bodyResposta.overview;
+      promiseBody.then((bodyResposta) => {
+         highlightTitle.textContent = bodyResposta.title;
+         highlightRating.textContent = bodyResposta.vote_average;
+         const options = {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+         };
+         highligthLaunch.textContent = new Date(bodyResposta.release_date)
+            .toLocaleDateString("pt-BR", options)
+            .toUpperCase();
+         highlightDescription.textContent = bodyResposta.overview;
 
-      let genreName = [];
-      for (let j = 0; j < bodyResposta.genres.length; j++) {
-         genreName.push(bodyResposta.genres[j].name);
-      }
+         let genreName = [];
+         for (let j = 0; j < bodyResposta.genres.length; j++) {
+            genreName.push(bodyResposta.genres[j].name);
+         }
 
-      highlightGenre.textContent = genreName.join(", ").toUpperCase();
+         highlightGenre.textContent = genreName.join(", ").toUpperCase();
 
-      const posterDiv = document.createElement("div");
-      posterDiv.classList.add("video__poster");
+         const posterDiv = document.createElement("div");
+         posterDiv.classList.add("video__poster");
 
-      const videoPoster = document.createElement("img");
-      videoPoster.src = bodyResposta.backdrop_path;
+         const videoPoster = document.createElement("img");
+         videoPoster.src = bodyResposta.backdrop_path;
 
-      posterDiv.append(videoPoster);
-      highlightVideo.append(posterDiv);
-   });
-});
+         posterDiv.append(videoPoster);
+         highlightVideo.append(posterDiv);
+      });
+   }
+);
 
 fetch(
    "https://tmdb-proxy.cubos-academy.workers.dev/3/movie/436969/videos?language=pt-BR"
@@ -144,8 +140,7 @@ fetch(
    const promiseBody = resposta.json();
 
    promiseBody.then((bodyResposta) => {
-      videoLink.href =
-         "https://www.youtube.com/watch?v=" + bodyResposta.results[0].key;
+      videoLink.href = "https://www.youtube.com/watch?v=" + bodyResposta.results[0].key;
    });
 });
 
@@ -190,12 +185,8 @@ searchInput.addEventListener("keydown", function (event) {
             const promise = resposta.json();
 
             promise.then((bodyResposta) => {
-               let limit =
-                  bodyResposta.results.length > 5
-                     ? 5
-                     : bodyResposta.results.length;
-               for (let i = 0; i < limit; i++)
-                  addMovie(i, i, bodyResposta.results);
+               let limit = bodyResposta.results.length > 5 ? 5 : bodyResposta.results.length;
+               for (let i = 0; i < limit; i++) addMovie(i, i, bodyResposta.results);
 
                const pages = 4;
                let pageNumber = 0;
@@ -231,55 +222,3 @@ searchInput.addEventListener("keydown", function (event) {
       }
    }
 });
-
-let currentTheme = "light";
-
-themeBtn.addEventListener("click", function () {
-   if (currentTheme == "light") {
-      darkTheme();
-   } else {
-      lightTheme();
-   }
-   localStorage.setItem("theme", currentTheme);
-});
-
-function darkTheme() {
-   body.style.backgroundColor = "#242424";
-   highlightInfo.style.backgroundColor = "#454545";
-   highlightGenreRating.style.color = "rgba(255,255,255,0.7)";
-   highlightDescription.style.color = "rgba(255,255,255,1)";
-   highlightTitle.style.color = "#E183C8";
-
-   next.src = "./assets/seta-direita-branca.svg";
-   prev.src = "./assets/seta-esquerda-branca.svg";
-
-   searchInput.style.backgroundColor = "#242424";
-   searchInput.style.border = "1px solid #FFF";
-   searchInput.style.color = "white";
-
-   subtitle.style.color = "white";
-
-   themeBtn.src = "./assets/dark-mode.svg";
-
-   currentTheme = "dark";
-}
-
-function lightTheme() {
-   body.style.backgroundColor = "#FFF";
-   highlightInfo.style.backgroundColor = "#FFF";
-   highlightGenreRating.style.color = "rgba(0,0,0,0.7)";
-   highlightDescription.style.color = "rgba(0,0,0,1)";
-
-   next.src = "./assets/seta-direita-preta.svg";
-   prev.src = "./assets/seta-esquerda-preta.svg";
-
-   searchInput.style.backgroundColor = "#FFF";
-   searchInput.style.border = "1px solid #979797";
-   searchInput.style.color = "#979797";
-
-   subtitle.style.color = "black";
-
-   themeBtn.src = "./assets/light-mode.svg";
-
-   currentTheme = "light";
-}
